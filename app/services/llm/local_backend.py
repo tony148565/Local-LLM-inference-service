@@ -11,10 +11,7 @@ class LocalBackend(LLMBackend):
 
         if not self.model_path:
             raise ValueError("MODEL_PATH is not set")
-
-        self.warmup_ok = False
-        self.warmup_error = None
-
+        
         load_start = time.time()
         self.llm = Llama(
             model_path=self.model_path,
@@ -39,11 +36,9 @@ class LocalBackend(LLMBackend):
 
     def health(self) -> dict:
         return {
-            "backend": "llama_cpp_local",
+            "backend": "local",
             "model_path": self.model_path,
             "n_ctx": self.n_ctx,
             "n_gpu_layers": self.n_gpu_layers,
-            "loaded_time_sec": round(self.loaded_time, 3),
-            "warmup_ok": self.warmup_ok,
-            "warmup_error": self.warmup_error,
+            "loaded_time_sec": round(self.loaded_time, 3)
         }
