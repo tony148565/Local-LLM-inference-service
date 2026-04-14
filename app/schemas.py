@@ -8,3 +8,8 @@ class AnalyzeRequest(BaseModel):
 class AnalyzeResponse(BaseModel):
     content: str
     backend: str
+
+class TextAnalysisResult(BaseModel):
+    topic: str
+    sentiment: str
+    urgency: str

@@ -1,10 +1,11 @@
 from fastapi import FastAPI, HTTPException
 
 from app.config import MODEL_PATH, N_CTX, N_GPU_LAYERS, MAX_TOKENS, VERBOSE
-from app.schemas import AnalyzeRequest, AnalyzeResponse
+from app.schemas import AnalyzeRequest, AnalyzeResponse, TextAnalysisResult
 from app.services.llm.local_backend import LocalBackend
 from app.services.llm.router import LLMRouter
 from app.services.llm.analyze_service import AnalyzeService
+from app.services.llm.classify_service import ClassifyService
 
 app = FastAPI(title="Local LLM Service")
 LLM_BACKEND = 'local'
@@ -23,6 +24,7 @@ router = LLMRouter(
 )
 
 analyze_service = AnalyzeService(router)
+classify_service = ClassifyService(router)
 
 @app.get("/health")
 def health() -> dict:
@@ -39,3 +41,11 @@ def analyze(req: AnalyzeRequest):
         )
     except Exception as exc:
         raise HTTPException(status_code=500, detail=str(exc)) from exc
+
+@app.post("/classify", response_model=TextAnalysisResult)
+def classify(req: AnalyzeRequest):
+    try:
+        return classify_service.classify(req.text, max_tokens=MAX_TOKENS)
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
+
