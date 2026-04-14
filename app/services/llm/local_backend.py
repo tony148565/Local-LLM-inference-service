@@ -1,8 +1,8 @@
-import time
 from llama_cpp import Llama
+import time
+from ..base import LLMBackend
 
-
-class LocalLLMService:
+class LocalBackend(LLMBackend):
     def __init__(self, model_path: str, n_ctx: int, n_gpu_layers: int, verbose: bool = False):
         self.model_path = model_path
         self.n_ctx = n_ctx
@@ -24,33 +24,16 @@ class LocalLLMService:
         )
         self.loaded_time = time.time() - load_start
 
-        try:
-            _ = self.llm.create_chat_completion(
-                messages=[
-                    {"role": "user", "content": "Reply with exactly one word: ready"}
-                ],
-                max_tokens=8,
-            )
-            self.warmup_ok = True
-        except Exception as exc:
-            self.warmup_error = str(exc)
-
-    def analyze(self, text: str, max_tokens: int = 256) -> str:
+    def generate(self, prompt: str, max_tokens: int = 256) -> dict:
         try:
             result = self.llm.create_chat_completion(
-                messages=[
-                    {
-                        "role": "system",
-                        "content": (
-                            "You are an analysis assistant. "
-                            "Provide a clear and direct answer."
-                        ),
-                    },
-                    {"role": "user", "content": text},
-                ],
+                messages=[{"role": "user", "content": prompt}],
                 max_tokens=max_tokens,
             )
-            return result["choices"][0]["message"]["content"].strip()
+            return {
+                "text": result["choices"][0]["message"]["content"].strip(),
+                "raw": result,
+            }
         except Exception as exc:
             raise RuntimeError(f"Local LLM inference failed: {exc}") from exc
 
