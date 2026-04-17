@@ -29,9 +29,9 @@ analyze_service = AnalyzeService(router)
 classify_service = ClassifyService(router)
 
 track2event_tool = Track2EventTool(
-    python_bin=r"/path/to/python",
-    cli_path=r"/path/to/Track2Event/cli.py",
-    workdir=r"/path/to/Track2Event",
+    python_bin="/home/tony/.venv_track/bin/python",
+    cli_path="/home/tony/Track2Event/cli.py",
+    workdir="/home/tony/Track2Event",
 )
 
 track2event_service = Track2EventService(track2event_tool)
