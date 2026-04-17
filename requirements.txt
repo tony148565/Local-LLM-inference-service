@@ -1,5 +1,12 @@
+--extra-index-url https://download.pytorch.org/whl/cu124
+
+torch
+torchvision
+torchaudio
 fastapi
 uvicorn
 pydantic
 llama-cpp-python
 dotenv
+pyyaml
+typeguard
