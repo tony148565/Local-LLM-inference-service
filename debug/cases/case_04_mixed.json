@@ -1,0 +1,20 @@
+[
+  {
+    "track_id": "101",
+    "event": "person_moving",
+    "start_frame": 0,
+    "end_frame": 150,
+    "duration": 6.25,
+    "avg_speed_pixels_per_second": 42.0,
+    "total_distance": 180.0
+  },
+  {
+    "track_id": "102",
+    "event": "person_staying",
+    "start_frame": 200,
+    "end_frame": 1600,
+    "duration": 58.3,
+    "avg_speed_pixels_per_second": 1.2,
+    "total_distance": 9.0
+  }
+]

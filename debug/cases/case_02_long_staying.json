@@ -1,0 +1,11 @@
+[
+  {
+    "track_id": "999",
+    "event": "person_staying",
+    "start_frame": 100,
+    "end_frame": 3000,
+    "duration": 120.0,
+    "avg_speed_pixels_per_second": 0.8,
+    "total_distance": 5.0
+  }
+]

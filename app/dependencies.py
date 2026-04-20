@@ -5,7 +5,8 @@ from app.services.llm.analyze_service import AnalyzeService
 from app.services.llm.classify_service import ClassifyService
 from app.services.track2event_service import Track2EventService
 from app.tools.Track2EventTool import Track2EventTool
-
+from app.services.llm.event_decision_service import EventDecisionService
+from app.services.track2event_analysis_service import Track2EventAnalysisService
 
 
 LLM_BACKEND = "local"
@@ -35,3 +36,10 @@ track2event_tool = Track2EventTool(
 )
 
 track2event_service = Track2EventService(track2event_tool)
+
+event_decision_service = EventDecisionService(router)
+
+track2event_analysis_service = Track2EventAnalysisService(
+    track2event_service=track2event_service,
+    event_decision_service=event_decision_service,
+)
